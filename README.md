@@ -4,8 +4,8 @@
 - [Data Source](#data-source)
 - [Tools](#tools)
 - [Data Cleaning and Preparation](#data-cleaning-and-preparation)
-- [Recommendations](#Recommendations)
 - [MCode](#mcode)
+- [Recommendations](#Recommendations)
 ### Problem Statement
 Netflix wants to better understand which movie they should produce next, including the most suitable actors and directors. We have a dataset containing movie budgets, box office performance, actors, directors, and genres.
 
