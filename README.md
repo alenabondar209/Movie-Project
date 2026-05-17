@@ -28,8 +28,8 @@ Find Original Data Source Here: [Movie Dataset Excel file](https://github.com/us
 2. Excel – Used Excel for data analysis
 3. Pivot Tables – For creating the dashboard and visualizations
 ### Data Cleaning and Preparation
-Data loading and inspection
-Handling errors and missing values
-Data cleaning and formatting
+- Data loading and inspection
+- Handling errors and missing values
+- Data cleaning and formatting
 
 The Excel file after the data cleaning & preparation process can be downloaded here – Ready to use Dashboard
