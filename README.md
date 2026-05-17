@@ -5,7 +5,7 @@
 - [Tools](#tools)
 - [Data Cleaning and Preparation](#data-cleaning-and-preparation)
 - [Recommendations](#Recommendations)
-- [M Code](#m-code)
+- [MCode](#mcode)
 ### Problem Statement
 Netflix wants to better understand which movie they should produce next, including the most suitable actors and directors. We have a dataset containing movie budgets, box office performance, actors, directors, and genres.
 
@@ -37,7 +37,7 @@ The Excel file after the data cleaning & preparation process can be downloaded h
 ### Dashboard
 <img width="1203" height="669" alt="image" src="https://github.com/user-attachments/assets/0016a005-8a44-450f-ae6a-a3f9963526e2" />
 <img width="1223" height="797" alt="image" src="https://github.com/user-attachments/assets/198e09f5-1a9e-45ae-b5fa-70fa17f0aa06" />
-### M Code
+### MCode
 
 ~~~let
     Source = Excel.Workbook(File.Contents("C:\Users\User\Downloads\Movies_Data_Homework.xlsx"), null, true),
