@@ -32,7 +32,7 @@ Find Original Data Source Here: [Movie Dataset Excel file](https://github.com/us
 - Data loading and inspection.
 - Handling errors, missing values.
 - Data cleaning and formatting.
-- 
+  
 The Excel file after the data cleaning & preparation process can be downloaded here – [Ready to use Dashboard](https://github.com/user-attachments/files/27935360/Movies_Data_Homework_Alena_Bondar_dashoard.xlsx)
 ### Dashboard
 <img width="1203" height="669" alt="image" src="https://github.com/user-attachments/assets/0016a005-8a44-450f-ae6a-a3f9963526e2" />
