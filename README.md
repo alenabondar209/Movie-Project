@@ -24,6 +24,6 @@ Movie Data:
 The primary dataset used for this analysis is the "Movie Data Homework.xlsx" file, containing detailed information about each movie’s performance (box office and budget), actors, directors, etc.
 Find Original Data Source Here: [Movie Dataset Excel file](https://github.com/user-attachments/files/27907274/Movies_Data_Homework.xlsx)
 ### Tools
-- Power Query – Used Power Query for data cleaning
-- Excel – Used Excel for data analysis
--- Pivot Tables – For creating the dashboard and visualizations
+1. Power Query – Used Power Query for data cleaning
+2. Excel – Used Excel for data analysis
+3. Pivot Tables – For creating the dashboard and visualizations
