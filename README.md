@@ -5,6 +5,7 @@
 - [Tools](#tools)
 - [Data Cleaning and Preparation](#data-cleaning-and-preparation)
 - [Recommendations](#Recommendations)
+- [M Code](#m-code)
 ### Problem Statement
 Netflix wants to better understand which movie they should produce next, including the most suitable actors and directors. We have a dataset containing movie budgets, box office performance, actors, directors, and genres.
 
@@ -36,7 +37,51 @@ The Excel file after the data cleaning & preparation process can be downloaded h
 ### DAshboard
 <img width="1203" height="669" alt="image" src="https://github.com/user-attachments/assets/0016a005-8a44-450f-ae6a-a3f9963526e2" />
 <img width="1223" height="797" alt="image" src="https://github.com/user-attachments/assets/198e09f5-1a9e-45ae-b5fa-70fa17f0aa06" />
-
+### M Code
+```
+let
+    Source = Excel.Workbook(File.Contents("C:\Users\User\Downloads\Movies_Data_Homework.xlsx"), null, true),
+    #"Movie Data_Sheet" = Source{[Item="Movie Data",Kind="Sheet"]}[Data],
+    #"Promoted Headers" = Table.PromoteHeaders(#"Movie Data_Sheet", [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Movie Title", type text}, {"Release Date", type date}, {"Wikipedia URL", type text}, {"Genre_First_ID", Int64.Type}, {"Genre_Second_ID", Int64.Type}, {"Director_First_ID", Int64.Type}, {"Cast_First_ID", Int64.Type}, {"Cast_Second_ID", Int64.Type}, {"Cast_Third_ID", Int64.Type}, {"Cast_Fourth_ID", Int64.Type}, {"Cast_Fifth_ID", Int64.Type}, {"Budget ($)", Int64.Type}, {"Box Office Revenue ($)", type number}, {"Column14", type any}, {"Column15", type any}, {"Column16", type any}, {"Column17", type any}, {"Column18", type any}, {"Column19", type any}, {"Column20", type any}, {"Column21", type any}}),
+    #"Removed Blank Rows" = Table.SelectRows(#"Changed Type", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+    #"Removed Columns" = Table.RemoveColumns(#"Removed Blank Rows",{"Column14", "Column15", "Column16", "Column17", "Column18", "Column19", "Column20", "Column21"}),
+    #"Merged Queries" = Table.NestedJoin(#"Removed Columns", {"Genre_First_ID"}, Genres, {"ID"}, "Genres", JoinKind.LeftOuter),
+    #"Expanded Genres" = Table.ExpandTableColumn(#"Merged Queries", "Genres", {"Genre"}, {"Genres.Genre"}),
+    #"Reordered Columns" = Table.ReorderColumns(#"Expanded Genres",{"Movie Title", "Release Date", "Wikipedia URL", "Genre_First_ID", "Genres.Genre", "Genre_Second_ID", "Director_First_ID", "Cast_First_ID", "Cast_Second_ID", "Cast_Third_ID", "Cast_Fourth_ID", "Cast_Fifth_ID", "Budget ($)", "Box Office Revenue ($)"}),
+    #"Merged Queries1" = Table.NestedJoin(#"Reordered Columns", {"Genre_Second_ID"}, Genres, {"ID"}, "Genres", JoinKind.LeftOuter),
+    #"Expanded Genres1" = Table.ExpandTableColumn(#"Merged Queries1", "Genres", {"Genre"}, {"Genres.Genre.1"}),
+    #"Reordered Columns1" = Table.ReorderColumns(#"Expanded Genres1",{"Movie Title", "Release Date", "Wikipedia URL", "Genre_First_ID", "Genres.Genre", "Genre_Second_ID", "Genres.Genre.1", "Director_First_ID", "Cast_First_ID", "Cast_Second_ID", "Cast_Third_ID", "Cast_Fourth_ID", "Cast_Fifth_ID", "Budget ($)", "Box Office Revenue ($)"}),
+    #"Renamed Columns" = Table.RenameColumns(#"Reordered Columns1",{{"Genres.Genre.1", "Genres 2"}}),
+    #"Merged Queries2" = Table.NestedJoin(#"Renamed Columns", {"Director_First_ID"}, Directors, {"ID"}, "Directors", JoinKind.LeftOuter),
+    #"Expanded Directors" = Table.ExpandTableColumn(#"Merged Queries2", "Directors", {"Director"}, {"Directors.Director"}),
+    #"Reordered Columns2" = Table.ReorderColumns(#"Expanded Directors",{"Movie Title", "Release Date", "Wikipedia URL", "Genre_First_ID", "Genres.Genre", "Genre_Second_ID", "Genres 2", "Director_First_ID", "Directors.Director", "Cast_First_ID", "Cast_Second_ID", "Cast_Third_ID", "Cast_Fourth_ID", "Cast_Fifth_ID", "Budget ($)", "Box Office Revenue ($)"}),
+    #"Merged Queries3" = Table.NestedJoin(#"Reordered Columns2", {"Cast_First_ID"}, Actors, {"ID"}, "Actors", JoinKind.LeftOuter),
+    #"Expanded Actors" = Table.ExpandTableColumn(#"Merged Queries3", "Actors", {"Actor"}, {"Actors.Actor"}),
+    #"Reordered Columns3" = Table.ReorderColumns(#"Expanded Actors",{"Movie Title", "Release Date", "Wikipedia URL", "Genre_First_ID", "Genres.Genre", "Genre_Second_ID", "Genres 2", "Director_First_ID", "Directors.Director", "Cast_First_ID", "Actors.Actor", "Cast_Second_ID", "Cast_Third_ID", "Cast_Fourth_ID", "Cast_Fifth_ID", "Budget ($)", "Box Office Revenue ($)"}),
+    #"Merged Queries4" = Table.NestedJoin(#"Reordered Columns3", {"Cast_Second_ID"}, Actors, {"ID"}, "Actors", JoinKind.LeftOuter),
+    #"Expanded Actors1" = Table.ExpandTableColumn(#"Merged Queries4", "Actors", {"Actor"}, {"Actors.Actor.1"}),
+    #"Renamed Columns1" = Table.RenameColumns(#"Expanded Actors1",{{"Actors.Actor.1", "Actors 2"}}),
+    #"Reordered Columns4" = Table.ReorderColumns(#"Renamed Columns1",{"Movie Title", "Release Date", "Wikipedia URL", "Genre_First_ID", "Genres.Genre", "Genre_Second_ID", "Genres 2", "Director_First_ID", "Directors.Director", "Cast_First_ID", "Actors.Actor", "Cast_Second_ID", "Actors 2", "Cast_Third_ID", "Cast_Fourth_ID", "Cast_Fifth_ID", "Budget ($)", "Box Office Revenue ($)"}),
+    #"Merged Queries5" = Table.NestedJoin(#"Reordered Columns4", {"Cast_Third_ID"}, Actors, {"ID"}, "Actors", JoinKind.LeftOuter),
+    #"Expanded Actors2" = Table.ExpandTableColumn(#"Merged Queries5", "Actors", {"Actor"}, {"Actors.Actor.1"}),
+    #"Reordered Columns5" = Table.ReorderColumns(#"Expanded Actors2",{"Movie Title", "Release Date", "Wikipedia URL", "Genre_First_ID", "Genres.Genre", "Genre_Second_ID", "Genres 2", "Director_First_ID", "Directors.Director", "Cast_First_ID", "Actors.Actor", "Cast_Second_ID", "Actors 2", "Cast_Third_ID", "Actors.Actor.1", "Cast_Fourth_ID", "Cast_Fifth_ID", "Budget ($)", "Box Office Revenue ($)"}),
+    #"Renamed Columns2" = Table.RenameColumns(#"Reordered Columns5",{{"Actors.Actor.1", "Actors 3"}}),
+    #"Merged Queries6" = Table.NestedJoin(#"Renamed Columns2", {"Cast_Fourth_ID"}, Actors, {"ID"}, "Actors", JoinKind.LeftOuter),
+    #"Expanded Actors3" = Table.ExpandTableColumn(#"Merged Queries6", "Actors", {"Actor"}, {"Actors.Actor.1"}),
+    #"Reordered Columns6" = Table.ReorderColumns(#"Expanded Actors3",{"Movie Title", "Release Date", "Wikipedia URL", "Genre_First_ID", "Genres.Genre", "Genre_Second_ID", "Genres 2", "Director_First_ID", "Directors.Director", "Cast_First_ID", "Actors.Actor", "Cast_Second_ID", "Actors 2", "Cast_Third_ID", "Actors 3", "Cast_Fourth_ID", "Actors.Actor.1", "Cast_Fifth_ID", "Budget ($)", "Box Office Revenue ($)"}),
+    #"Renamed Columns3" = Table.RenameColumns(#"Reordered Columns6",{{"Actors.Actor.1", "Actors 4"}}),
+    #"Merged Queries7" = Table.NestedJoin(#"Renamed Columns3", {"Cast_Fifth_ID"}, Actors, {"ID"}, "Actors", JoinKind.LeftOuter),
+    #"Expanded Actors4" = Table.ExpandTableColumn(#"Merged Queries7", "Actors", {"Actor"}, {"Actors.Actor.1"}),
+    #"Reordered Columns7" = Table.ReorderColumns(#"Expanded Actors4",{"Movie Title", "Release Date", "Wikipedia URL", "Genre_First_ID", "Genres.Genre", "Genre_Second_ID", "Genres 2", "Director_First_ID", "Directors.Director", "Cast_First_ID", "Actors.Actor", "Cast_Second_ID", "Actors 2", "Cast_Third_ID", "Actors 3", "Cast_Fourth_ID", "Actors 4", "Cast_Fifth_ID", "Actors.Actor.1", "Budget ($)", "Box Office Revenue ($)"}),
+    #"Renamed Columns4" = Table.RenameColumns(#"Reordered Columns7",{{"Actors.Actor.1", "Actors 5"}}),
+    #"Added Custom" = Table.AddColumn(#"Renamed Columns4", "ROI", each ([#"Box Office Revenue ($)"]-[#"Budget ($)"])/[#"Budget ($)"]),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"ROI", Percentage.Type}, {"Box Office Revenue ($)", Currency.Type}, {"Budget ($)", Currency.Type}}),
+    #"Added Custom1" = Table.AddColumn(#"Changed Type1", "Profit", each [#"Box Office Revenue ($)"]-[#"Budget ($)"]),
+    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom1",{{"Profit", Currency.Type}})
+in
+    #"Changed Type2"
+```
 ### Recommendations
 Recommendation on the Next Movie Production Strategy:
 The decision on what type of movie to produce next should be based on the company’s current goals and financial capacity.
