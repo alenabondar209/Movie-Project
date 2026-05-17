@@ -4,7 +4,7 @@
 - [Data Source](#data-source)
 - [Tools](#tools)
 - [Data Cleaning and Preparation](#data-cleaning-and-preparation)
-[]
+- [Questions for Data Analysis](#questions-for-data-analysis)
 ### Problem Statement
 Netflix wants to better understand which movie they should produce next, including the most suitable actors and directors. We have a dataset containing movie budgets, box office performance, actors, directors, and genres.
 
@@ -32,4 +32,7 @@ Find Original Data Source Here: [Movie Dataset Excel file](https://github.com/us
 - Handling errors and missing values
 - Data cleaning and formatting
 
-The Excel file after the data cleaning & preparation process can be downloaded here – Ready to use Dashboard
+The Excel file after the data cleaning & preparation process can be downloaded here – [Ready to use Dashboard](https://github.com/user-attachments/files/27935360/Movies_Data_Homework_Alena_Bondar_dashoard.xlsx)
+### Questions for Data Analysis
+Which top 10 genres were the most successful (Box) these years?
+Which top 5 actors were the most successful?
