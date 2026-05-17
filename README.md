@@ -38,8 +38,8 @@ The Excel file after the data cleaning & preparation process can be downloaded h
 <img width="1203" height="669" alt="image" src="https://github.com/user-attachments/assets/0016a005-8a44-450f-ae6a-a3f9963526e2" />
 <img width="1223" height="797" alt="image" src="https://github.com/user-attachments/assets/198e09f5-1a9e-45ae-b5fa-70fa17f0aa06" />
 ### M Code
-```
-let
+
+~~~let
     Source = Excel.Workbook(File.Contents("C:\Users\User\Downloads\Movies_Data_Homework.xlsx"), null, true),
     #"Movie Data_Sheet" = Source{[Item="Movie Data",Kind="Sheet"]}[Data],
     #"Promoted Headers" = Table.PromoteHeaders(#"Movie Data_Sheet", [PromoteAllScalars=true]),
@@ -81,7 +81,7 @@ let
     #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom1",{{"Profit", Currency.Type}})
 in
     #"Changed Type2"
-```
+~~~
 ### Recommendations
 Recommendation on the Next Movie Production Strategy:
 The decision on what type of movie to produce next should be based on the company’s current goals and financial capacity.
