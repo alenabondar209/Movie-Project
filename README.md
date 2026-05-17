@@ -2,7 +2,7 @@
 ## Table of Content
 - [Problem Statement](#problem-statement)
 - [Data Source](#data-source)
-[]
+- [Tools](tools)
 []
 []
 ### Problem Statement
@@ -18,9 +18,12 @@ Your task is to build an Excel dashboard that provides insights into this datase
 - Any additional insights that can guide future production decisions
 
 The final dashboard should be clear, interactive, and visually compelling, enabling Netflix to make data-driven decisions.
-
 ### Data Source
 
 Movie Data:
 The primary dataset used for this analysis is the "Movie Data Homework.xlsx" file, containing detailed information about each movie’s performance (box office and budget), actors, directors, etc.
-Find Original Data Source Here
+Find Original Data Source Here: [Movie Dataset Excel file](https://github.com/user-attachments/files/27907274/Movies_Data_Homework.xlsx)
+### Tools
+- Power Query – Used Power Query for data cleaning
+- Excel – Used Excel for data analysis
+-- Pivot Tables – For creating the dashboard and visualizations
